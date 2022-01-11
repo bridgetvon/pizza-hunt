@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 const $backBtn = document.querySelector('#back-btn');
 const $pizzaName = document.querySelector('#pizza-name');
 const $createdBy = document.querySelector('#created-by');
@@ -8,6 +10,32 @@ const $commentSection = document.querySelector('#comment-section');
 const $newCommentForm = document.querySelector('#new-comment-form');
 
 let pizzaId;
+
+//retrieve pizza id from the URL and make a get request for the associated pizza
+function getPizza() {
+  //get id of pizza 
+  const searchParams = new URLSearchParams(document.location.search.substring(1));
+  const pizzaId = searchParams.get('id');
+
+  //get pizza info
+  fetch(`api/pizzas/${pizzaId}`)
+  .then(response => {
+    //throw error so if there is no pizza id
+    if(!response.ok) {
+      throw new Error({ message: 'Something went wrong!'})
+    }
+    return response.json();
+  })
+  .then(printPizza())
+  //throw a catch so it takes the user back to the homepage 
+  .catch(err => {
+    console.log(err);
+    alert('Cannot find pizza with this Id, taking you back home');
+    // the window history API exposes methods that let us control the state of the browsers sesssion
+    //as long as this particular browser session has a previous page it eill behave as if the user clicked the back button
+    window.history.back();
+  });
+}
 
 function printPizza(pizzaData) {
   console.log(pizzaData);
@@ -111,6 +139,9 @@ function handleNewReplySubmit(event) {
 $backBtn.addEventListener('click', function() {
   window.history.back();
 });
+
+getPizza();
+
 
 $newCommentForm.addEventListener('submit', handleNewCommentSubmit);
 $commentSection.addEventListener('submit', handleNewReplySubmit);
