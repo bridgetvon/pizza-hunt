@@ -41,7 +41,10 @@ const PizzaSchema = new Schema({
 //this is in pizza because we only care about comment sin relation to pizza
 //virtuals let you add virtual properties to a document that arent stored in the database
 PizzaSchema.virtual('commentCount').get(function() {
-    return this.comments.length;
+    //include all replies in comment count 
+    //use reduce method to tally up the total of every comment with its replies
+    //In its basic form, .reduce() takes two parameters, an accumulator and a currentValue. Here, the accumulator is total, and the currentValue is comment. As .reduce() walks through the array, it passes the accumulating total and the current value of comment into the function, with the return of the function revising the total for the next iteration through the array
+    return this.comments.reduce((total, comment) => total + comment.replies.length +1, 0);
 });
 
 
