@@ -1,6 +1,6 @@
 const { Pizza } = require('../models');
 
-const pizzaControllers = {
+const pizzaController = {
     //the functions will go here as methods
     //get all pizzas
     getAllPizza(req, res) {
