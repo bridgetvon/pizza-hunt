@@ -3,10 +3,15 @@ const dateFormat = require('../utils/dateFormat');
 
 const PizzaSchema = new Schema({
     pizzaName: {
-        type: String
+        type: String,
+        //require makes it so data must exist for the field 
+        required: 'You need to provide a name!',
+        trim: true
     },
     createdBy: {
-        type: String
+        type: String,
+        required: true,
+        trim: true
     },
     createdAt: {
         type: Date,
@@ -17,6 +22,10 @@ const PizzaSchema = new Schema({
     },
     size: {
         type: String,
+        required: true,
+        //enum: enumerable- a set of data that can be iterated over 
+        //we provide an array of options this size field can accept 
+        enum: ['Personal', 'Small', 'Medium', 'Large', 'Extra Large'],
         default: 'Large'
     },
     toppings: [],
