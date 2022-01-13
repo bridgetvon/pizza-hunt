@@ -75,4 +75,4 @@ const pizzaControllers = {
       }
     };
     
-module.exports = pizzaControllers;
+module.exports = pizzaController;
