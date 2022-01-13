@@ -10,7 +10,7 @@ const {
     createPizza,
     updatePizza,
     deletePizza
-} = require('../../controllers/pizza-controllers');
+} = require('../../controllers/pizza-controller');
 
 //set up all get and post routes 
 router 
